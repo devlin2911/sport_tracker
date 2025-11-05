@@ -6,6 +6,7 @@ import { collection, query, orderBy, onSnapshot, addDoc, doc, updateDoc, deleteD
 import { LogIn, LogOut, CheckCircle, Plus, Trash2, Edit, Loader2 } from 'lucide-react';
 // ĐÃ SỬA LỖI: Chuyển từ alias '@/lib/firebase' sang đường dẫn tương đối để đảm bảo biên dịch.
 import { db, auth, getAppId, signInWithGoogle, logOut } from '../lib/firebase';
+import { handleLogin, handleLogout } from "../app/authService.ts";
 
 // --- Interfaces (Cập nhật để khớp với Firestore) ---
 
@@ -285,6 +286,21 @@ export default function HomePage() {
     // 4. Render UI Components
     // =================================================================
     
+    const handleLogin = async () => {
+        const user = await signInWithGoogle();
+        if (user) {
+          console.log("Đăng nhập thành công:", user.displayName || user.email);
+        } else {
+          console.log("Đăng nhập thất bại hoặc bị hủy.");
+        }
+      };
+      
+      const handleLogout = async () => {
+        await logOut();
+        console.log("Đã đăng xuất thành công!");
+      };
+      
+
     const renderAuthStatus = () => {
         if (loadingAuth) {
             return (
