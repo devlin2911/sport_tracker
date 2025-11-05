@@ -285,20 +285,6 @@ export default function HomePage() {
     // =================================================================
     // 4. Render UI Components
     // =================================================================
-    
-    const handleLogin = async () => {
-        const user = await signInWithGoogle();
-        if (user) {
-          console.log("Đăng nhập thành công:", user.displayName || user.email);
-        } else {
-          console.log("Đăng nhập thất bại hoặc bị hủy.");
-        }
-      };
-      
-      const handleLogout = async () => {
-        await logOut();
-        console.log("Đã đăng xuất thành công!");
-      };
       
 
     const renderAuthStatus = () => {
