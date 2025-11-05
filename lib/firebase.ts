@@ -1,63 +1,58 @@
 // lib/firebase.ts
-// File này chứa logic cấu hình Firebase, Auth và Firestore
+// File cấu hình Firebase cho ứng dụng Next.js
 
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { 
+  getAuth, 
+  signInWithPopup, 
+  GoogleAuthProvider, 
+  signOut, 
+  User 
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// Các biến toàn cục được cung cấp bởi môi trường Canvas
-// Chúng ta sẽ giả định các biến này tồn tại hoặc sử dụng giá trị mặc định cho an toàn
-declare const __firebase_config: string | undefined;
+// --- Cấu hình Firebase từ biến môi trường (an toàn & đúng chuẩn Next.js) ---
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "YOUR_API_KEY",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "YOUR_AUTH_DOMAIN",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "YOUR_PROJECT_ID",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "YOUR_STORAGE_BUCKET",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "YOUR_MESSAGING_SENDER_ID",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "YOUR_APP_ID",
+};
 
-// Phân tích cú pháp cấu hình Firebase
-let firebaseConfig = {};
-if (typeof __firebase_config !== 'undefined') {
-    try {
-        firebaseConfig = JSON.parse(__firebase_config);
-    } catch (e) {
-        console.error("Lỗi khi parse __firebase_config:", e);
-    }
-} else {
-    // Cấu hình an toàn nếu không có biến môi trường (chỉ dùng cho mục đích phát triển cục bộ)
-    console.warn("Sử dụng cấu hình Firebase mặc định. Vui lòng cung cấp __firebase_config.");
-    firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
-}
+// --- Đảm bảo không khởi tạo lại Firebase nhiều lần ---
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-
-// Khởi tạo Firebase
-const app = initializeApp(firebaseConfig);
-
-// Khởi tạo các dịch vụ
+// --- Khởi tạo các dịch vụ ---
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Hàm Đăng nhập bằng Google
+// --- Hàm đăng nhập bằng Google ---
 const signInWithGoogle = async (): Promise<User | null> => {
-    try {
-        const result = await signInWithPopup(auth, googleProvider);
-        return result.user;
-    } catch (error) {
-        console.error("Lỗi đăng nhập Google:", error);
-        // Có thể là lỗi cửa sổ bật lên bị đóng hoặc bị chặn
-        return null;
-    }
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
+  } catch (error) {
+    console.error("Lỗi đăng nhập Google:", error);
+    return null;
+  }
 };
 
-// Hàm Đăng xuất
+// --- Hàm đăng xuất ---
 const logOut = async () => {
-    try {
-        await signOut(auth);
-    } catch (error) {
-        console.error("Lỗi đăng xuất:", error);
-    }
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Lỗi đăng xuất:", error);
+  }
 };
 
+// --- (Tùy chọn) Nếu bạn cần getAppId, có thể thêm hàm này ---
+export const getAppId = () => {
+  return process.env.NEXT_PUBLIC_FIREBASE_APP_ID || 'default-app-id';
+};
+
+// --- Xuất ra cho các file khác dùng ---
 export { db, auth, signInWithGoogle, logOut };
