@@ -91,7 +91,7 @@ export default function HomePage() {
     
     // Hàm utility để lấy path collection (Giả định private data)
     const getCollectionPath = (collectionName: string) => {
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const appId = process.env.NEXT_PUBLIC_APP_ID || 'default-app-id';
         const userId = user?.uid || 'anonymous';
         return `artifacts/${appId}/users/${userId}/${collectionName}`;
     }
