@@ -73,18 +73,18 @@ export default function HomePage() {
         return () => unsubscribe();
     }, []);
 
-    const handleLogin = useCallback(async () => {
-        setErrorMessage(null);
-        await signInWithGoogle();
-    }, []);
+    // const handleLogin = useCallback(async () => {
+    //     setErrorMessage(null);
+    //     await signInWithGoogle();
+    // }, []);
 
-    const handleLogout = useCallback(async () => {
-        setErrorMessage(null);
-        await logOut();
-        // Xóa các state dữ liệu khi đăng xuất
-        setPlayers([]);
-        setMatches([]);
-    }, []);
+    // const handleLogout = useCallback(async () => {
+    //     setErrorMessage(null);
+    //     await logOut();
+    //     // Xóa các state dữ liệu khi đăng xuất
+    //     setPlayers([]);
+    //     setMatches([]);
+    // }, []);
 
     // =================================================================
     // 2. Logic Firestore: Real-time Data Fetching (Players & Matches)
@@ -285,6 +285,20 @@ export default function HomePage() {
     // =================================================================
     // 4. Render UI Components
     // =================================================================
+    
+    const handleLogin = async () => {
+        const user = await signInWithGoogle();
+        if (user) {
+          console.log("Đăng nhập thành công:", user.displayName || user.email);
+        } else {
+          console.log("Đăng nhập thất bại hoặc bị hủy.");
+        }
+      };
+      
+      const handleLogout = async () => {
+        await logOut();
+        console.log("Đã đăng xuất thành công!");
+      };
       
 
     const renderAuthStatus = () => {
