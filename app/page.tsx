@@ -6,7 +6,6 @@ import { collection, query, orderBy, onSnapshot, addDoc, doc, updateDoc, deleteD
 import { LogIn, LogOut, CheckCircle, Plus, Trash2, Edit, Loader2 } from 'lucide-react';
 // ĐÃ SỬA LỖI: Chuyển từ alias '@/lib/firebase' sang đường dẫn tương đối để đảm bảo biên dịch.
 import { db, auth, getAppId, signInWithGoogle, handleLogout, logOut } from '../lib/firebase';
-import { User, onAuthStateChanged } from 'firebase/auth'; 
 
 // --- Interfaces (Cập nhật để khớp với Firestore) ---
 
