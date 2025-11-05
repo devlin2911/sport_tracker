@@ -1,20 +1,20 @@
-import { auth, googleProvider } from "../lib/firebase";
-import { signInWithPopup, signOut } from "firebase/auth";
+// app/authService.ts
+import { signInWithGoogle, logOut } from "../lib/firebase";
 
 export const handleLogin = async () => {
   try {
-    await signInWithPopup(auth, googleProvider);
-    console.log("✅ Đăng nhập thành công!");
+    await signInWithGoogle();
+    console.log("Đăng nhập thành công!");
   } catch (error) {
-    console.error("❌ Lỗi đăng nhập:", error);
+    console.error("Lỗi đăng nhập:", error);
   }
 };
 
 export const handleLogout = async () => {
   try {
-    await signOut(auth);
-    console.log("👋 Đăng xuất thành công!");
+    await logOut();
+    console.log("Đăng xuất thành công!");
   } catch (error) {
-    console.error("❌ Lỗi đăng xuất:", error);
+    console.error("Lỗi đăng xuất:", error);
   }
 };
