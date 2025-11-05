@@ -157,7 +157,7 @@ export default function HomePage() {
                             </tbody>
                         </table>
                     </div>
-                    {players.length === 0 && <p className="text-center text-gray-500 mt-4 italic">Chưa có vận động viên nào được thêm vào.</p>}
+                    {players.length === 0 && <p className="text-center text-gray-500 mt-4 italic">Chưa có vận động viên nào được đăng kí.</p>}
                 </div>
             ) : (
                 // SCHEDULE TAB
