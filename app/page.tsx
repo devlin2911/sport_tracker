@@ -5,7 +5,8 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 import { collection, query, orderBy, onSnapshot, addDoc, doc, updateDoc, deleteDoc, where } from 'firebase/firestore';
 import { LogIn, LogOut, CheckCircle, Plus, Trash2, Edit, Loader2 } from 'lucide-react';
 // ĐÃ SỬA LỖI: Chuyển từ alias '@/lib/firebase' sang đường dẫn tương đối để đảm bảo biên dịch.
-import { db, auth, signInWithGoogle, logOut } from '../lib/firebase';
+import { db, auth, getAppId, signInWithGoogle, handleLogout, logOut } from '../lib/firebase';
+import { User, onAuthStateChanged } from 'firebase/auth'; 
 
 // --- Interfaces (Cập nhật để khớp với Firestore) ---
 
@@ -302,10 +303,12 @@ export default function HomePage() {
             return (
                 <div className="flex items-center space-x-3">
                     <span className="text-white text-sm font-medium hidden sm:inline-block truncate max-w-[150px]">
-                        {user.displayName || user.email || 'Người dùng'}
+                        {/* user.displayName/user.email có thể null/undefined nếu user mới */}
+                        {user.displayName || user.email || (user.isAnonymous ? 'Ẩn danh' : 'Người dùng')}
                     </span>
                     <button
-                        onClick={handleLogout}
+                        // Gọi handleLogout đã import
+                        onClick={handleLogout} 
                         className="flex items-center space-x-2 px-3 py-1.5 text-sm font-semibold rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors shadow-lg"
                     >
                         <LogOut className="w-4 h-4" />
@@ -317,7 +320,8 @@ export default function HomePage() {
 
         return (
             <button
-                onClick={handleLogin}
+                // Gọi handleLogin đã import
+                onClick={handleLogin} 
                 className="flex items-center space-x-2 px-4 py-2 text-sm font-semibold rounded-full bg-white text-gray-800 hover:bg-gray-100 transition-colors shadow-lg"
             >
                 <LogIn className="w-5 h-5 text-cyan-600" />
