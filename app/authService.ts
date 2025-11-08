@@ -18,3 +18,13 @@ export const handleLogout = async () => {
     console.error("Lỗi đăng xuất:", error);
   }
 };
+
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    return result.user;
+  } catch (err) {
+    console.error("Lỗi đăng nhập Google:", err);
+    return null;
+  }
+};

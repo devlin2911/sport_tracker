@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { User, onAuthStateChanged, signInWithPopup  } from 'firebase/auth';
 import { collection, query, orderBy, onSnapshot, addDoc, doc, updateDoc, deleteDoc, where } from 'firebase/firestore';
 import { LogIn, LogOut, CheckCircle, Plus, Trash2, Edit, Loader2 } from 'lucide-react';
 // ĐÃ SỬA LỖI: Chuyển từ alias '@/lib/firebase' sang đường dẫn tương đối để đảm bảo biên dịch.
@@ -59,7 +59,6 @@ export default function HomePage() {
     const [editPlayer2, setEditPlayer2] = useState('');
     const [editTime, setEditTime] = useState('');
 
-
     // =================================================================
     // 1. Logic Xác thực (Auth)
     // =================================================================
@@ -71,20 +70,7 @@ export default function HomePage() {
             setLoadingAuth(false);
         });
         return () => unsubscribe();
-    }, []);
-
-    // const handleLogin = useCallback(async () => {
-    //     setErrorMessage(null);
-    //     await signInWithGoogle();
-    // }, []);
-
-    // const handleLogout = useCallback(async () => {
-    //     setErrorMessage(null);
-    //     await logOut();
-    //     // Xóa các state dữ liệu khi đăng xuất
-    //     setPlayers([]);
-    //     setMatches([]);
-    // }, []);
+    }, []);  
 
     // =================================================================
     // 2. Logic Firestore: Real-time Data Fetching (Players & Matches)
@@ -237,7 +223,7 @@ export default function HomePage() {
             await addDoc(matchesCol, {
                 player1: player1.trim(),
                 player2: player2.trim(),
-                time: time.trim(),
+                time: time.trim(), 
                 userId: user.uid,
                 createdAt: new Date().toISOString(),
             });
@@ -286,19 +272,35 @@ export default function HomePage() {
     // 4. Render UI Components
     // =================================================================
     
-    const handleLogin = async () => {
-        const user = await signInWithGoogle();
-        if (user) {
-          console.log("Đăng nhập thành công:", user.displayName || user.email);
-        } else {
-          console.log("Đăng nhập thất bại hoặc bị hủy.");
-        }
-      };
+    const handleLogin = useCallback(async () => {
+        try {
+          setErrorMessage(null);
+          const user = await signInWithGoogle();
       
-      const handleLogout = async () => {
-        await logOut();
-        console.log("Đã đăng xuất thành công!");
-      };
+          if (user) {
+            console.log("✅ Đăng nhập thành công:", user.displayName || user.email);
+          } else {
+            console.log("⚠️ Đăng nhập thất bại hoặc bị hủy.");
+            setErrorMessage("Đăng nhập thất bại hoặc bị hủy.");
+          }
+        } catch (error) {
+          console.error("❌ Lỗi đăng nhập:", error);
+          setErrorMessage("Lỗi đăng nhập Google. Vui lòng thử lại!");
+        }
+      }, []);
+      
+      const handleLogout = useCallback(async () => {
+        try {
+          setErrorMessage(null);
+          await logOut();
+          setPlayers([]);  // Xóa dữ liệu local
+          setMatches([]);  // Xóa dữ liệu local
+          console.log("🚪 Đã đăng xuất thành công!");
+        } catch (error) {
+          console.error("❌ Lỗi đăng xuất:", error);
+          setErrorMessage("Lỗi đăng xuất. Vui lòng thử lại!");
+        }
+      }, []);      
       
 
     const renderAuthStatus = () => {
