@@ -1,5 +1,5 @@
 // app/authService.ts
-import { signInWithGoogle, logOut } from "../lib/firebase";
+import { logOut } from "../lib/firebase";
 
 export const handleLogin = async () => {
   try {
@@ -19,12 +19,3 @@ export const handleLogout = async () => {
   }
 };
 
-export const signInWithGoogle = async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    return result.user;
-  } catch (err) {
-    console.error("Lỗi đăng nhập Google:", err);
-    return null;
-  }
-};
