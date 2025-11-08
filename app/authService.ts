@@ -1,5 +1,5 @@
 // app/authService.ts
-import { logOut } from "../lib/firebase";
+import { signInWithGoogle, logOut } from "../lib/firebase";
 
 export const handleLogin = async () => {
   try {
