@@ -229,12 +229,7 @@ export default function HomePage() {
         </p>
       )}
 
-      {user && (
-        <>
-          {activeTab === 'players' && <ListAthlete user={user} />}
-          {activeTab === 'matches' && <ListMatch user={user} />}
-        </>
-      )}
+      
 
     </main>
     )
