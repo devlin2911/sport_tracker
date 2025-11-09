@@ -217,17 +217,9 @@ export default function HomePage() {
       {/* Hiển thị nội dung theo tab */}
       {activeTab === 'table' ? (
         <ListAthlete
-          user={user}
-          getCollectionPath={getCollectionPath}
-          renderAuthGuard={renderAuthGuard}
-          renderLoading={renderLoading}
         />
       ) : (
         <ListMatch
-          user={user}
-          getCollectionPath={getCollectionPath}
-          renderAuthGuard={renderAuthGuard}
-          renderLoading={renderLoading}
         />
       )}
 
