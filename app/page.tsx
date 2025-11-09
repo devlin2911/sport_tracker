@@ -10,6 +10,22 @@ import { handleLogin, handleLogout } from "../app/authService";
 import  ListAthlete  from "../app/list_athlete";
 import  ListMatch  from "../app/list_match";
 
+// Player/Athlete
+interface Player {
+    id: string; // ID từ Firestore (string)
+    name: string;
+    score: number;
+    userId: string; // Để lọc dữ liệu theo người dùng
+}
+
+// Match/Schedule
+    interface Match {
+        id: string; // ID từ Firestore (string)
+        player1: string;
+        player2: string;
+        time: string;
+        userId: string;
+    }
 
 // --- Main Component ---
 
@@ -20,7 +36,7 @@ export default function HomePage() {
     const [matches, setMatches] = useState<Match[]>([]);
     const [player1, setPlayer1] = useState("");
     const [player2, setPlayer2] = useState("");
-    
+
     const [players, setPlayers] = useState<Player[]>([]);
     const [playerName, setPlayerName] = useState("");
     const [playerScore, setPlayerScore] = useState<number | "">("");
