@@ -158,6 +158,19 @@ export default function ListMatch() {
 
     return (
         <div className="bg-amber-100 text-black p-4 sm:p-6 rounded-3xl shadow-2xl w-full max-w-lg md:max-w-4xl">
+
+            {errorMessage && (
+                <div className="mt-1 mb-3 text-red-600 font-semibold bg-red-100 px-4 py-2 rounded-xl flex justify-between items-center">
+                    <span>⚠️ {errorMessage}</span>
+                    <button
+                    onClick={() => setErrorMessage(null)}
+                    className="ml-4 text-red-600 font-bold"
+                    >
+                    ✖
+                    </button>
+                </div>
+            )}
+
             <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center">
                 <span className="mr-2 text-3xl">📅</span> Lên Lịch thi đấu
             </h2>
@@ -196,7 +209,8 @@ export default function ListMatch() {
                                     disabled={loadingMatches}
                                 >
                                     <Plus className="w-5 h-5 inline mr-1" /> Lên lịch trận đấu
-                                </button>
+                                </button> 
+
                             </div>
 
                             {loadingMatches ? renderLoading() : (
@@ -281,6 +295,7 @@ export default function ListMatch() {
                             {matches.length === 0 && !loadingMatches && <p className="text-center text-gray-500 mt-4 italic">Chưa có trận đấu nào trong lịch.</p>}
                         </>
                     )}
+
         </div>
     )
 }

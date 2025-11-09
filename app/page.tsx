@@ -17,6 +17,15 @@ export default function HomePage() {
     const [user, setUser] = useState<User | null>(null);
     const [loadingAuth, setLoadingAuth] = useState(true);
 
+    const [matches, setMatches] = useState<Match[]>([]);
+    const [player1, setPlayer1] = useState("");
+    const [player2, setPlayer2] = useState("");
+    
+    const [players, setPlayers] = useState<Player[]>([]);
+    const [playerName, setPlayerName] = useState("");
+    const [playerScore, setPlayerScore] = useState<number | "">("");
+    const [loadingPlayers, setLoadingPlayers] = useState(false);
+
     const [activeTab, setActiveTab] = useState<"table" | "schedule">("table");
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
