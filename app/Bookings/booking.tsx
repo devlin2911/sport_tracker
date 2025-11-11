@@ -36,7 +36,7 @@ export default function CourtBooking() {
   const eventCells = {};
 
   // 🟢 Hàm click để toggle trạng thái đặt sân
-  const handleCellClick = (court, time) => {
+  const handleCellClick = (court: string, time: string) => {
     const key = `${court}_${time}`;
     // Nếu sân bị khóa hoặc là sự kiện thì không được bấm
     if (lockedCells[key] || eventCells[key]) return;
