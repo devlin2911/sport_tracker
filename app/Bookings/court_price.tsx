@@ -1,7 +1,13 @@
+'use client';
+
 import React from "react";
 import { ArrowLeft } from "lucide-react";
 
-export default function CourtPriceList({ onBack }) {
+interface CourtPriceListProps {
+    onBack: () => void; // onBack là một hàm không nhận đối số và không trả về gì
+}
+
+export default function CourtPriceList({ onBack }: CourtPriceListProps) {
   return (
     <div className="min-h-screen bg-green-700 text-white p-4">
       <div className="flex items-center gap-2 mb-4">
@@ -24,7 +30,7 @@ export default function CourtPriceList({ onBack }) {
         </thead>
         <tbody>
           <tr>
-            <td className="border p-2 text-center" rowSpan="2">T2 - T6</td>
+            <td className="border p-2 text-center" rowSpan={2}>T2 - T6</td>
             <td className="border p-2 text-center">6h - 17h</td>
             <td className="border p-2 text-center">100.000 ₫</td>
             <td className="border p-2 text-center">130.000 ₫</td>

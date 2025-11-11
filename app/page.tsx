@@ -145,7 +145,7 @@ export default function HomePage() {
         
         <button
           onClick={() => setActiveTab('home')}
-          className={`px-4 py-2 rounded-full font-semibold transition-all ${
+          className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
             activeTab === 'home'
               ? 'bg-cyan-600 text-white shadow-lg'
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
@@ -156,7 +156,7 @@ export default function HomePage() {
 
         <button
           onClick={() => setActiveTab('booking')}
-          className={`px-4 py-2 rounded-full font-semibold transition-all ${
+          className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
             activeTab === 'booking'
               ? 'bg-cyan-600 text-white shadow-lg'
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
@@ -167,7 +167,7 @@ export default function HomePage() {
 
         <button
           onClick={() => setActiveTab('table')}
-          className={`px-4 py-2 rounded-full font-semibold transition-all ${
+          className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
             activeTab === 'table'
               ? 'bg-cyan-600 text-white shadow-lg'
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
@@ -178,7 +178,7 @@ export default function HomePage() {
 
         <button
           onClick={() => setActiveTab('schedule')}
-          className={`px-4 py-2 rounded-full font-semibold transition-all ${
+          className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
             activeTab === 'schedule'
               ? 'bg-cyan-600 text-white shadow-lg'
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
