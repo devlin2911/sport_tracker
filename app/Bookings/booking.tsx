@@ -32,8 +32,8 @@ export default function CourtBooking() {
   ];
 
   // Giả lập một vài sân bị khóa hoặc có sự kiện
-  const lockedCells = {};
-  const eventCells = {};
+  const lockedCells: Record<string, boolean> = {};
+  const eventCells: Record<string, boolean> = {};
 
   // 🟢 Hàm click để toggle trạng thái đặt sân
   const handleCellClick = (court: string, time: string) => {
