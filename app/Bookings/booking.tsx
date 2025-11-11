@@ -53,7 +53,7 @@ export default function CourtBooking() {
   };
 
   // ✅ Hàm xác định màu nền của ô
-  const getCellColor = (court, time) => {
+  const getCellColor = (court: string, time: string) => {
     const key = `${court}_${time}`;
     if (lockedCells[key]) return "bg-gray-400 cursor-not-allowed"; // Xám
     if (eventCells[key]) return "bg-pink-300 cursor-not-allowed"; // Hồng
