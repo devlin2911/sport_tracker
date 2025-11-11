@@ -11,7 +11,7 @@ export default function CourtBooking() {
   });
 
   // ✅ Lưu trạng thái đặt sân tạm thời (trước khi lưu thật vào Firestore)
-  const [bookedCells, setBookedCells] = useState({});
+  const [bookedCells, setBookedCells] = useState<Record<string, boolean>>({});
 
   if (view === "price") {
     return <CourtPriceList onBack={() => setView("booking")} />;
