@@ -18,7 +18,7 @@ export default function HomePage() {
   // ==============================
   const [user, setUser] = useState<User | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
-  const [activeTab, setActiveTab] = useState< 'home' | 'table' | 'schedule' | 'booking'>('home');
+  const [activeTab, setActiveTab] = useState< 'home' | 'booking' | 'athlete' | 'match' >('home');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // ==============================
@@ -32,7 +32,7 @@ export default function HomePage() {
     return () => unsubscribe();
   }, []);
 
-  const handleTabChange = useCallback((tab: 'home' | 'table' | 'schedule' | 'booking') => {
+  const handleTabChange = useCallback((tab: 'home' | 'booking' | 'athlete' | 'match' ) => {
     setActiveTab(tab);
     // Cập nhật URL một lần duy nhất khi người dùng click
     router.replace(`?tab=${tab}`); 
@@ -121,7 +121,7 @@ export default function HomePage() {
   // 2. Đồng bộ tab với URL query
   // ==============================
   useEffect(() => {
-    const tab = searchParams.get('tab') as 'home' | 'table' | 'schedule' | 'booking';
+    const tab = searchParams.get('tab') as 'home' | 'booking' | 'athlete' | 'match' ;
     
     // Chỉ cập nhật state nếu giá trị trên URL khác với state hiện tại
     if (tab && activeTab !== tab) {
@@ -145,7 +145,7 @@ export default function HomePage() {
       {/* Header */}
       <div className="w-full max-w-8xl flex justify-between items-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 drop-shadow-md cursor-pointer"
-            onClick={() => setActiveTab("home")}
+            onClick={() => handleTabChange('home')}
         >
             🏓 Pickleball 
         </h1>
@@ -178,9 +178,9 @@ export default function HomePage() {
         </button>
 
         <button
-          onClick={() => handleTabChange('table')}
+          onClick={() => handleTabChange('athlete')}
           className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
-            activeTab === 'table'
+            activeTab === 'athlete'
               ? 'bg-cyan-600 text-white shadow-lg'
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
           }`}
@@ -189,9 +189,9 @@ export default function HomePage() {
         </button>
 
         <button
-          onClick={() => handleTabChange('schedule')}
+          onClick={() => handleTabChange('match')}
           className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
-            activeTab === 'schedule'
+            activeTab === 'match'
               ? 'bg-cyan-600 text-white shadow-lg'
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
           }`}
@@ -201,16 +201,16 @@ export default function HomePage() {
       </div>
 
       {/* Tab Content */}
-      <div className="w-full max-w-5xl">
+      <div className="w-full max-w-full">
         {activeTab === 'home' && (
           <div className="p-6 text-center bg-white rounded-xl shadow-md">
             <h2 className="text-2xl font-bold mb-4">Chào mừng đến Pickleball Club!</h2>
             <p>Đây là giao diện chính khi mở trang, bạn có thể chọn các tab để xem nội dung khác.</p>
           </div>
         )}
-        {activeTab === 'table' && <ListAthlete />}
-        {activeTab === 'schedule' && <ListMatch />}
-        {activeTab === 'booking' && <Booking />}
+        {activeTab === 'booking' && <Booking/>}
+        {activeTab === 'athlete' && <ListAthlete/>}
+        {activeTab === 'match' && <ListMatch/>}
       </div>
 
       {/* Error Message */}

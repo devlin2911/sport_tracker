@@ -20,7 +20,7 @@ export default function ListMatch() {
     const [user, setUser] = useState<User | null>(null);
     const [loadingAuth, setLoadingAuth] = useState(true);
 
-    const [activeTab, setActiveTab] = useState<"table" | "schedule">("table");
+    const [activeTab, setActiveTab] = useState<"athlete" | "match">("athlete");
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     // Dữ liệu cho lịch thi đấu (Real-time từ Firestore)
@@ -158,7 +158,7 @@ export default function ListMatch() {
     );
 
     return (
-        <div className="bg-amber-100 text-black p-4 sm:p-6 rounded-3xl shadow-2xl w-full max-w-lg md:max-w-4xl">
+        <div className="mx-auto bg-amber-100 text-black p-4 sm:p-6 rounded-3xl shadow-2xl w-full max-w-lg md:max-w-4xl">
 
             {errorMessage && (
                 <div className="mt-1 mb-3 text-red-600 font-semibold bg-red-100 px-4 py-2 rounded-xl flex justify-between items-center">
