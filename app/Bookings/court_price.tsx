@@ -7,7 +7,7 @@ interface CourtPriceListProps {
     onBack: () => void; // onBack là một hàm không nhận đối số và không trả về gì
 }
 
-export default function CourtPriceList({ onBack }) {
+export default function CourtPriceList({ onBack }: CourtPriceListProps) {
     const priceData = [
         { period: "Giờ Cao Điểm (T2-T6)", time: "18:00 - 21:00", rate: "200.000 VNĐ/giờ", icon: Zap, color: "bg-red-100 text-red-700" },
         { period: "Ngày Thường (T2-T6)", time: "6:00 - 18:00 & 21:00 - 22:00", rate: "150.000 VNĐ/giờ", icon: Clock, color: "bg-blue-100 text-blue-700" },
