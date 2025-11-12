@@ -1,53 +1,112 @@
 'use client';
 
 import React from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, DollarSign, Tag, Zap, Sun } from "lucide-react";
 
 interface CourtPriceListProps {
     onBack: () => void; // onBack là một hàm không nhận đối số và không trả về gì
 }
 
-export default function CourtPriceList({ onBack }: CourtPriceListProps) {
-  return (
-    <div className="min-h-screen bg-green-700 text-white p-4">
-      <div className="flex items-center gap-2 mb-4">
-        <button onClick={onBack} className="flex items-center gap-1 cursor-pointer">
-          <ArrowLeft size={20} />
-          <span>Trở lại</span>
-        </button>
-      </div>
+export default function CourtPriceList({ onBack }) {
+    const priceData = [
+        { period: "Giờ Cao Điểm (T2-T6)", time: "18:00 - 21:00", rate: "200.000 VNĐ/giờ", icon: Zap, color: "bg-red-100 text-red-700" },
+        { period: "Ngày Thường (T2-T6)", time: "6:00 - 18:00 & 21:00 - 22:00", rate: "150.000 VNĐ/giờ", icon: Clock, color: "bg-blue-100 text-blue-700" },
+        { period: "Cuối Tuần (T7 & CN)", time: "Cả Ngày", rate: "180.000 VNĐ/giờ", icon: Sun, color: "bg-yellow-100 text-yellow-700" },
+        { period: "Thuê Dài Hạn", time: "Từ 3 tháng trở lên", rate: "Giảm 15% tổng hóa đơn", icon: Tag, color: "bg-green-100 text-green-700" },
+    ];
 
-      <h2 className="text-xl font-bold mb-4 text-center">Bảng giá sân Pickleball</h2>
+    return (
+        <div className="p-6 md:p-10 min-h-[500px] flex flex-col font-inter">
+            {/* Header */}
+            <div className="mb-8 border-b pb-4 flex items-center justify-between">
+                <button
+                    onClick={onBack}
+                    className="flex items-center text-green-700 hover:text-green-900 
+                                font-semibold transition duration-200 cursor-pointer"
+                >
+                    <ArrowLeft className="w-5 h-5 mr-2" />
+                    Quay lại Màn hình Đặt Sân
+                </button>
+                <h2 className="text-2xl md:text-3xl font-extrabold text-green-800">
+                    Bảng Giá Thuê Sân
+                </h2>
+                <div className="w-1/4"></div> {/* Placeholder cho căn chỉnh */}
+            </div>
 
-      <table className="w-full bg-white text-black rounded-lg overflow-hidden">
-        <thead className="bg-green-200 font-semibold">
-          <tr>
-            <th className="border p-2 text-center">Thứ</th>
-            <th className="border p-2 text-center">Khung giờ</th>
-            <th className="border p-2 text-center">Cố định</th>
-            <th className="border p-2 text-center">Vãng lai</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border p-2 text-center" rowSpan={2}>T2 - T6</td>
-            <td className="border p-2 text-center">6h - 17h</td>
-            <td className="border p-2 text-center">100.000 ₫</td>
-            <td className="border p-2 text-center">130.000 ₫</td>
-          </tr>
-          <tr>
-            <td className="border p-2 text-center">17h - 22h</td>
-            <td className="border p-2 text-center">120.000 ₫</td>
-            <td className="border p-2 text-center">150.000 ₫</td>
-          </tr>
-          <tr>
-            <td className="border p-2 text-center">T7 - CN</td>
-            <td className="border p-2 text-center">6h - 22h</td>
-            <td className="border p-2 text-center">140.000 ₫</td>
-            <td className="border p-2 text-center">140.000 ₫</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+            {/* Price Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                {priceData.map((item, index) => (
+                    <div
+                        key={index}
+                        className={`p-6 rounded-2xl shadow-xl border-t-4 border-b-4 ${item.color} flex flex-col justify-between transform hover:scale-[1.02] transition duration-300`}
+                    >
+                        <div className="flex items-center mb-4">
+                            <item.icon className={`w-6 h-6 mr-3 ${item.color.replace(/bg-.*-100/, '').replace(/text-/, 'text-')} font-bold`} />
+                            <h3 className="text-lg font-bold">
+                                {item.period}
+                            </h3>
+                        </div>
+                        <p className="text-sm mb-2 opacity-80 flex items-center">
+                             <Clock className="w-4 h-4 mr-2 opacity-60" /> {item.time}
+                        </p>
+                        <p className="text-xl font-extrabold flex items-center">
+                            <DollarSign className="w-5 h-5 mr-2" /> {item.rate}
+                        </p>
+                    </div>
+                ))}
+            </div>
+
+            {/* Detailed Table (Responsive) */}
+            <div className="flex-grow overflow-x-auto">
+                <table className="min-w-full bg-white rounded-xl overflow-hidden border border-gray-200 shadow-md">
+                    <thead>
+                        <tr className="bg-green-600 text-white text-left text-sm uppercase tracking-wider">
+                            <th className="p-4 rounded-tl-xl w-1/4">Phân Loại</th>
+                            <th className="p-4 w-1/4">Khung Giờ</th>
+                            <th className="p-4 w-1/4">Giá/Giờ</th>
+                            <th className="p-4 rounded-tr-xl w-1/4">Ghi Chú</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-gray-700">
+                        <tr className="border-b hover:bg-gray-50">
+                            <td className="p-4 font-semibold">Giờ Cao Điểm</td>
+                            <td className="p-4">18:00 - 21:00 (T2-T6)</td>
+                            <td className="p-4 text-red-600 font-bold">200.000 VNĐ</td>
+                            <td className="p-4">Giá cố định, áp dụng cả 3 sân (Sân 1, 2, 3)</td>
+                        </tr>
+                        <tr className="border-b bg-green-50 hover:bg-green-100">
+                            <td className="p-4 font-semibold">Giờ Thường (Ngày)</td>
+                            <td className="p-4">6:00 - 18:00 (T2-T6)</td>
+                            <td className="p-4 text-blue-600 font-bold">150.000 VNĐ</td>
+                            <td className="p-4">Giá thấp hơn để khuyến khích chơi ban ngày.</td>
+                        </tr>
+                         <tr className="border-b hover:bg-gray-50">
+                            <td className="p-4 font-semibold">Giờ Thường (Tối Muộn)</td>
+                            <td className="p-4">21:00 - 22:00 (T2-T6)</td>
+                            <td className="p-4 text-blue-600 font-bold">150.000 VNĐ</td>
+                            <td className="p-4">Sau 22:00 đóng cửa.</td>
+                        </tr>
+                         <tr className="border-b bg-green-50 hover:bg-green-100">
+                            <td className="p-4 font-semibold">Cuối Tuần</td>
+                            <td className="p-4">6:00 - 22:00 (T7 & CN)</td>
+                            <td className="p-4 text-yellow-600 font-bold">180.000 VNĐ</td>
+                            <td className="p-4">Giá đồng nhất cho cả ngày cuối tuần.</td>
+                        </tr>
+                         <tr className="hover:bg-gray-50">
+                            <td className="p-4 font-semibold">Khách Thuê Cố Định</td>
+                            <td className="p-4">Tối thiểu 3 tháng</td>
+                            <td className="p-4 text-green-600 font-bold">Ưu đãi lớn</td>
+                            <td className="p-4">Liên hệ quản lý để có giá tốt nhất.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Footer / Contact */}
+            <div className="mt-8 text-center text-gray-500 text-sm p-4 bg-gray-50 rounded-lg">
+                <p>⚠️ Giá trên là giá thuê sân cơ bản, chưa bao gồm các dịch vụ phụ trợ (như thuê vợt, nước uống).</p>
+                <p className="mt-1">Để biết thêm chi tiết về thuê dài hạn, vui lòng liên hệ hotline: **0123456789**</p>
+            </div>
+        </div>
+    );
 }
