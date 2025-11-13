@@ -7,6 +7,7 @@ import { db, auth, signInWithGoogle, logOut } from '../lib/firebase';
 import ListAthlete from './list_athlete';
 import ListMatch from './list_match';
 import Booking from './Bookings/booking';
+import SportEquip from "./sport_product/sport_equip";
 import { useSearchParams, useRouter } from 'next/navigation';
 
 export default function HomePage() {
@@ -18,7 +19,7 @@ export default function HomePage() {
   // ==============================
   const [user, setUser] = useState<User | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
-  const [activeTab, setActiveTab] = useState< 'home' | 'booking' | 'athlete' | 'match' >('home');
+  const [activeTab, setActiveTab] = useState< 'home' | 'booking' | 'athlete' | 'match' | 'sport_equip' >('home');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // ==============================
@@ -32,7 +33,7 @@ export default function HomePage() {
     return () => unsubscribe();
   }, []);
 
-  const handleTabChange = useCallback((tab: 'home' | 'booking' | 'athlete' | 'match' ) => {
+  const handleTabChange = useCallback((tab: 'home' | 'booking' | 'athlete' | 'match' | 'sport_equip' ) => {
     setActiveTab(tab);
     // Cập nhật URL một lần duy nhất khi người dùng click
     router.replace(`?tab=${tab}`); 
@@ -121,7 +122,7 @@ export default function HomePage() {
   // 2. Đồng bộ tab với URL query
   // ==============================
   useEffect(() => {
-    const tab = searchParams.get('tab') as 'home' | 'booking' | 'athlete' | 'match' ;
+    const tab = searchParams.get('tab') as 'home' | 'booking' | 'athlete' | 'match' | 'sport_equip' ;
     
     // Chỉ cập nhật state nếu giá trị trên URL khác với state hiện tại
     if (tab && activeTab !== tab) {
@@ -196,7 +197,17 @@ export default function HomePage() {
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
           }`}
         >
-          Lịch thi đấu
+          Giải đấu
+        </button>
+        <button
+          onClick={() => handleTabChange('sport_equip')}
+          className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
+            activeTab === 'sport_equip'
+              ? 'bg-cyan-600 text-white shadow-lg'
+              : 'bg-white text-gray-700 border border-gray-300 hover:bg-amber-50'
+          }`}
+        >
+          Dụng cụ thể thao
         </button>
       </div>
 
@@ -211,6 +222,7 @@ export default function HomePage() {
         {activeTab === 'booking' && <Booking/>}
         {activeTab === 'athlete' && <ListAthlete/>}
         {activeTab === 'match' && <ListMatch/>}
+        {activeTab === 'sport_equip' && <SportEquip/>}
       </div>
 
       {/* Error Message */}

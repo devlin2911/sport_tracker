@@ -21,13 +21,13 @@ export default function CourtPriceList({ onBack }: CourtPriceListProps) {
             <div className="mb-8 border-b pb-4 flex items-center justify-between">
                 <button
                     onClick={onBack}
-                    className="flex items-center text-green-700 hover:text-green-900 
+                    className="flex items-center text-gray-500 hover:text-gray-900 
                                 font-semibold transition duration-200 cursor-pointer"
                 >
                     <ArrowLeft className="w-5 h-5 mr-2" />
                     Quay lại Màn hình Đặt Sân
                 </button>
-                <h2 className="text-2xl md:text-3xl font-extrabold text-green-800">
+                <h2 className="text-2xl md:text-3xl font-extrabold text-blue-800">
                     Bảng Giá Thuê Sân
                 </h2>
                 <div className="w-1/4"></div> {/* Placeholder cho căn chỉnh */}
@@ -60,7 +60,7 @@ export default function CourtPriceList({ onBack }: CourtPriceListProps) {
             <div className="flex-grow overflow-x-auto">
                 <table className="min-w-full bg-white rounded-xl overflow-hidden border border-gray-200 shadow-md">
                     <thead>
-                        <tr className="bg-green-600 text-white text-left text-sm uppercase tracking-wider">
+                        <tr className="bg-sky-500 text-white text-left text-sm uppercase tracking-wider">
                             <th className="p-4 rounded-tl-xl w-1/4">Phân Loại</th>
                             <th className="p-4 w-1/4">Khung Giờ</th>
                             <th className="p-4 w-1/4">Giá/Giờ</th>
