@@ -327,203 +327,203 @@ const ScheduleManager: React.FC<ScheduleManagerProps> = ({ user, activeCategory,
         </div>
     );
 
-    return (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center">
-                <Calendar className="w-6 h-6 mr-2 text-indigo-600" /> Lên Lịch Trận Đấu
-            </h2>
+    // return (
+    //     <div className="space-y-6">
+    //         <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+    //             <Calendar className="w-6 h-6 mr-2 text-indigo-600" /> Lên Lịch Trận Đấu
+    //         </h2>
             
-            {/* INPUT FORM */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-indigo-500">
-                <p className="text-sm text-gray-500 mb-3 italic">Thêm trận đấu mới cho thể loại: <span className='font-bold'>{activeCategory}</span></p>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                    <input
-                        type="text"
-                        placeholder="Sân (VD: Sân 1)"
-                        value={newMatch.court}
-                        onChange={(e) => setNewMatch({...newMatch, court: e.target.value})}
-                        className="col-span-2 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
-                        disabled={loadingMatches}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Thời gian (VD: 14:30 - 5/11)"
-                        value={newMatch.time}
-                        onChange={(e) => setNewMatch({...newMatch, time: e.target.value})}
-                        className="col-span-3 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
-                        disabled={loadingMatches}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Đội A (VD: Nam A & Nam B)"
-                        value={newMatch.teamA}
-                        onChange={(e) => setNewMatch({...newMatch, teamA: e.target.value})}
-                        className="col-span-3 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
-                        disabled={loadingMatches}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Đội B"
-                        value={newMatch.teamB}
-                        onChange={(e) => setNewMatch({...newMatch, teamB: e.target.value})}
-                        className="col-span-3 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
-                        disabled={loadingMatches}
-                    />
-                    <button
-                        onClick={addMatch}
-                        className="col-span-2 md:col-span-1 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-all transform hover:scale-[1.01] shadow-md disabled:opacity-50 flex items-center justify-center"
-                        disabled={loadingMatches}
-                    >
-                        <Plus className="w-5 h-5 inline mr-1" /> Lên Lịch
-                    </button>
-                </div>
-                <p className='text-xs text-gray-400 mt-2'>*Để nhập tỉ số, vui lòng chỉnh sửa trận đấu sau khi thêm.</p>
-            </div>
+    //         {/* INPUT FORM */}
+    //         <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-indigo-500">
+    //             <p className="text-sm text-gray-500 mb-3 italic">Thêm trận đấu mới cho thể loại: <span className='font-bold'>{activeCategory}</span></p>
+    //             <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+    //                 <input
+    //                     type="text"
+    //                     placeholder="Sân (VD: Sân 1)"
+    //                     value={newMatch.court}
+    //                     onChange={(e) => setNewMatch({...newMatch, court: e.target.value})}
+    //                     className="col-span-2 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
+    //                     disabled={loadingMatches}
+    //                 />
+    //                 <input
+    //                     type="text"
+    //                     placeholder="Thời gian (VD: 14:30 - 5/11)"
+    //                     value={newMatch.time}
+    //                     onChange={(e) => setNewMatch({...newMatch, time: e.target.value})}
+    //                     className="col-span-3 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
+    //                     disabled={loadingMatches}
+    //                 />
+    //                 <input
+    //                     type="text"
+    //                     placeholder="Đội A (VD: Nam A & Nam B)"
+    //                     value={newMatch.teamA}
+    //                     onChange={(e) => setNewMatch({...newMatch, teamA: e.target.value})}
+    //                     className="col-span-3 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
+    //                     disabled={loadingMatches}
+    //                 />
+    //                 <input
+    //                     type="text"
+    //                     placeholder="Đội B"
+    //                     value={newMatch.teamB}
+    //                     onChange={(e) => setNewMatch({...newMatch, teamB: e.target.value})}
+    //                     className="col-span-3 md:col-span-1 border-2 border-amber-300 p-2 rounded-xl focus:ring-blue-500 focus:border-blue-500 shadow-inner"
+    //                     disabled={loadingMatches}
+    //                 />
+    //                 <button
+    //                     onClick={addMatch}
+    //                     className="col-span-2 md:col-span-1 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-all transform hover:scale-[1.01] shadow-md disabled:opacity-50 flex items-center justify-center"
+    //                     disabled={loadingMatches}
+    //                 >
+    //                     <Plus className="w-5 h-5 inline mr-1" /> Lên Lịch
+    //                 </button>
+    //             </div>
+    //             <p className='text-xs text-gray-400 mt-2'>*Để nhập tỉ số, vui lòng chỉnh sửa trận đấu sau khi thêm.</p>
+    //         </div>
             
-            {/* MATCH LIST / TABLE */}
-            <div className="overflow-x-auto shadow-xl rounded-xl bg-white">
-                {loadingMatches ? renderLoading() : (
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-amber-100">
-                            <tr>
-                                <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase">SÂN</th>
-                                <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase">THỜI GIAN</th>
-                                <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase w-1/3">ĐỘI A</th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-700 uppercase w-20">TỈ SỐ</th>
-                                <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase w-1/3">ĐỘI B</th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-700 uppercase">HÀNH ĐỘNG</th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-100">
-                            {matches.length === 0 ? (
-                                <tr>
-                                    <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500 italic">
-                                        Chưa có lịch thi đấu nào cho thể loại này.
-                                    </td>
-                                </tr>
-                            ) : (
-                                matches.map((m) => {
-                                    const isEditing = editingMatchId === m.id;
-                                    return (
-                                        <tr key={m.id} className="hover:bg-gray-50 transition-colors">
-                                            {/* SÂN và THỜI GIAN */}
-                                            <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500">
-                                                {isEditing ? (
-                                                    <input
-                                                        type="text"
-                                                        value={editMatchData.court}
-                                                        onChange={(e) => setEditMatchData({...editMatchData, court: e.target.value})}
-                                                        className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                                                        placeholder="Sân"
-                                                    />
-                                                ) : m.court}
-                                            </td>
-                                            <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-800 font-medium">
-                                                {isEditing ? (
-                                                    <input
-                                                        type="text"
-                                                        value={editMatchData.time}
-                                                        onChange={(e) => setEditMatchData({...editMatchData, time: e.target.value})}
-                                                        className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                                                        placeholder="Thời gian"
-                                                    />
-                                                ) : m.time}
-                                            </td>
+    //         {/* MATCH LIST / TABLE */}
+    //         <div className="overflow-x-auto shadow-xl rounded-xl bg-white">
+    //             {loadingMatches ? renderLoading() : (
+    //                 <table className="min-w-full divide-y divide-gray-200">
+    //                     <thead className="bg-amber-100">
+    //                         <tr>
+    //                             <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase">SÂN</th>
+    //                             <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase">THỜI GIAN</th>
+    //                             <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase w-1/3">ĐỘI A</th>
+    //                             <th className="px-3 py-3 text-center text-xs font-semibold text-gray-700 uppercase w-20">TỈ SỐ</th>
+    //                             <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase w-1/3">ĐỘI B</th>
+    //                             <th className="px-3 py-3 text-center text-xs font-semibold text-gray-700 uppercase">HÀNH ĐỘNG</th>
+    //                         </tr>
+    //                     </thead>
+    //                     <tbody className="bg-white divide-y divide-gray-100">
+    //                         {matches.length === 0 ? (
+    //                             <tr>
+    //                                 <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500 italic">
+    //                                     Chưa có lịch thi đấu nào cho thể loại này.
+    //                                 </td>
+    //                             </tr>
+    //                         ) : (
+    //                             matches.map((m) => {
+    //                                 const isEditing = editingMatchId === m.id;
+    //                                 return (
+    //                                     <tr key={m.id} className="hover:bg-gray-50 transition-colors">
+    //                                         {/* SÂN và THỜI GIAN */}
+    //                                         <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500">
+    //                                             {isEditing ? (
+    //                                                 <input
+    //                                                     type="text"
+    //                                                     value={editMatchData.court}
+    //                                                     onChange={(e) => setEditMatchData({...editMatchData, court: e.target.value})}
+    //                                                     className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+    //                                                     placeholder="Sân"
+    //                                                 />
+    //                                             ) : m.court}
+    //                                         </td>
+    //                                         <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-800 font-medium">
+    //                                             {isEditing ? (
+    //                                                 <input
+    //                                                     type="text"
+    //                                                     value={editMatchData.time}
+    //                                                     onChange={(e) => setEditMatchData({...editMatchData, time: e.target.value})}
+    //                                                     className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+    //                                                     placeholder="Thời gian"
+    //                                                 />
+    //                                             ) : m.time}
+    //                                         </td>
                                             
-                                            {/* ĐỘI A */}
-                                            <td className="px-3 py-3 text-sm font-semibold text-cyan-700">
-                                                {isEditing ? (
-                                                    <input
-                                                        type="text"
-                                                        value={editMatchData.teamA}
-                                                        onChange={(e) => setEditMatchData({...editMatchData, teamA: e.target.value})}
-                                                        className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                                                        placeholder="Đội A"
-                                                    />
-                                                ) : m.teamA}
-                                            </td>
+    //                                         {/* ĐỘI A */}
+    //                                         <td className="px-3 py-3 text-sm font-semibold text-cyan-700">
+    //                                             {isEditing ? (
+    //                                                 <input
+    //                                                     type="text"
+    //                                                     value={editMatchData.teamA}
+    //                                                     onChange={(e) => setEditMatchData({...editMatchData, teamA: e.target.value})}
+    //                                                     className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+    //                                                     placeholder="Đội A"
+    //                                                 />
+    //                                             ) : m.teamA}
+    //                                         </td>
                                             
-                                            {/* TỈ SỐ */}
-                                            <td className="px-3 py-3 text-center whitespace-nowrap text-lg font-extrabold">
-                                                <div className='flex items-center justify-center space-x-1'>
-                                                    {isEditing ? (
-                                                        <>
-                                                            <input
-                                                                type="number"
-                                                                value={editMatchData.scoreA}
-                                                                onChange={(e) => setEditMatchData({...editMatchData, scoreA: parseInt(e.target.value) || 0})}
-                                                                className="border border-gray-300 rounded-md px-1 py-1 text-base w-10 text-center"
-                                                                min="0"
-                                                            />
-                                                            <span className='text-red-500'>-</span>
-                                                            <input
-                                                                type="number"
-                                                                value={editMatchData.scoreB}
-                                                                onChange={(e) => setEditMatchData({...editMatchData, scoreB: parseInt(e.target.value) || 0})}
-                                                                className="border border-gray-300 rounded-md px-1 py-1 text-base w-10 text-center"
-                                                                min="0"
-                                                            />
-                                                        </>
-                                                    ) : (
-                                                        <span className='text-indigo-600'>{m.scoreA} <span className='text-red-500'>-</span> {m.scoreB}</span>
-                                                    )}
-                                                </div>
-                                            </td>
+    //                                         {/* TỈ SỐ */}
+    //                                         <td className="px-3 py-3 text-center whitespace-nowrap text-lg font-extrabold">
+    //                                             <div className='flex items-center justify-center space-x-1'>
+    //                                                 {isEditing ? (
+    //                                                     <>
+    //                                                         <input
+    //                                                             type="number"
+    //                                                             value={editMatchData.scoreA}
+    //                                                             onChange={(e) => setEditMatchData({...editMatchData, scoreA: parseInt(e.target.value) || 0})}
+    //                                                             className="border border-gray-300 rounded-md px-1 py-1 text-base w-10 text-center"
+    //                                                             min="0"
+    //                                                         />
+    //                                                         <span className='text-red-500'>-</span>
+    //                                                         <input
+    //                                                             type="number"
+    //                                                             value={editMatchData.scoreB}
+    //                                                             onChange={(e) => setEditMatchData({...editMatchData, scoreB: parseInt(e.target.value) || 0})}
+    //                                                             className="border border-gray-300 rounded-md px-1 py-1 text-base w-10 text-center"
+    //                                                             min="0"
+    //                                                         />
+    //                                                     </>
+    //                                                 ) : (
+    //                                                     <span className='text-indigo-600'>{m.scoreA} <span className='text-red-500'>-</span> {m.scoreB}</span>
+    //                                                 )}
+    //                                             </div>
+    //                                         </td>
 
-                                            {/* ĐỘI B */}
-                                            <td className="px-3 py-3 text-sm font-semibold text-cyan-700">
-                                                {isEditing ? (
-                                                    <input
-                                                        type="text"
-                                                        value={editMatchData.teamB}
-                                                        onChange={(e) => setEditMatchData({...editMatchData, teamB: e.target.value})}
-                                                        className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                                                        placeholder="Đội B"
-                                                    />
-                                                ) : m.teamB}
-                                            </td>
+    //                                         {/* ĐỘI B */}
+    //                                         <td className="px-3 py-3 text-sm font-semibold text-cyan-700">
+    //                                             {isEditing ? (
+    //                                                 <input
+    //                                                     type="text"
+    //                                                     value={editMatchData.teamB}
+    //                                                     onChange={(e) => setEditMatchData({...editMatchData, teamB: e.target.value})}
+    //                                                     className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+    //                                                     placeholder="Đội B"
+    //                                                 />
+    //                                             ) : m.teamB}
+    //                                         </td>
                                             
-                                            {/* HÀNH ĐỘNG */}
-                                            <td className="px-3 py-3 whitespace-nowrap text-center">
-                                                <div className="flex space-x-2 justify-center">
-                                                    {isEditing ? (
-                                                        <button
-                                                            onClick={() => saveEditMatch(m.id)}
-                                                            className="text-green-600 hover:text-green-800 p-1 rounded-full hover:bg-green-100 transition"
-                                                            aria-label="Lưu"
-                                                        >
-                                                            <CheckCircle className="w-5 h-5" />
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            onClick={() => startEdit(m)}
-                                                            className="text-blue-600 hover:text-blue-800 p-1 rounded-full hover:bg-blue-100 transition disabled:opacity-50"
-                                                            aria-label="Sửa"
-                                                            disabled={editingMatchId !== null}
-                                                        >
-                                                            <Edit className="w-5 h-5" />
-                                                        </button>
-                                                    )}
-                                                    <button
-                                                        onClick={() => deleteMatch(m.id)}
-                                                        className="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-100 transition"
-                                                        aria-label="Xóa"
-                                                        disabled={editingMatchId !== null}
-                                                    >
-                                                        <Trash2 className="w-5 h-5" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })
-                            )}
-                        </tbody>
-                    </table>
-                )}
-            </div>
-        </div>
-    );
+    //                                         {/* HÀNH ĐỘNG */}
+    //                                         <td className="px-3 py-3 whitespace-nowrap text-center">
+    //                                             <div className="flex space-x-2 justify-center">
+    //                                                 {isEditing ? (
+    //                                                     <button
+    //                                                         onClick={() => saveEditMatch(m.id)}
+    //                                                         className="text-green-600 hover:text-green-800 p-1 rounded-full hover:bg-green-100 transition"
+    //                                                         aria-label="Lưu"
+    //                                                     >
+    //                                                         <CheckCircle className="w-5 h-5" />
+    //                                                     </button>
+    //                                                 ) : (
+    //                                                     <button
+    //                                                         onClick={() => startEdit(m)}
+    //                                                         className="text-blue-600 hover:text-blue-800 p-1 rounded-full hover:bg-blue-100 transition disabled:opacity-50"
+    //                                                         aria-label="Sửa"
+    //                                                         disabled={editingMatchId !== null}
+    //                                                     >
+    //                                                         <Edit className="w-5 h-5" />
+    //                                                     </button>
+    //                                                 )}
+    //                                                 <button
+    //                                                     onClick={() => deleteMatch(m.id)}
+    //                                                     className="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-100 transition"
+    //                                                     aria-label="Xóa"
+    //                                                     disabled={editingMatchId !== null}
+    //                                                 >
+    //                                                     <Trash2 className="w-5 h-5" />
+    //                                                 </button>
+    //                                             </div>
+    //                                         </td>
+    //                                     </tr>
+    //                                 );
+    //                             })
+    //                         )}
+    //                     </tbody>
+    //                 </table>
+    //             )}
+    //         </div>
+    //     </div>
+    // );
 };
 
 
