@@ -221,111 +221,111 @@ const StatsTable: React.FC<StatsTableProps> = ({ matches, activeCategory }) => {
 
 // --- V. COMPONENT: SCHEDULE MANAGER (QUẢN LÝ LỊCH VÀ CRUD) ---
 
-interface ScheduleManagerProps {
-    user: FirebaseUser | null;
-    activeCategory: TournamentCategory;
-    matches: ScheduleMatch[];
-    loadingMatches: boolean;
-    setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>;
-}
+// interface ScheduleManagerProps {
+//     user: FirebaseUser | null;
+//     activeCategory: TournamentCategory;
+//     matches: ScheduleMatch[];
+//     loadingMatches: boolean;
+//     setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>;
+// }
 
-const ScheduleManager: React.FC<ScheduleManagerProps> = ({ user, activeCategory, matches, loadingMatches, setErrorMessage }) => {
+// const ScheduleManager: React.FC<ScheduleManagerProps> = ({ user, activeCategory, matches, loadingMatches, setErrorMessage }) => {
     
-    // State cho Form thêm mới
-    const [newMatch, setNewMatch] = useState({
-        court: "",
-        time: "",
-        teamA: "",
-        teamB: "",
-        scoreA: 0,
-        scoreB: 0,
-    });
+//     // State cho Form thêm mới
+//     const [newMatch, setNewMatch] = useState({
+//         court: "",
+//         time: "",
+//         teamA: "",
+//         teamB: "",
+//         scoreA: 0,
+//         scoreB: 0,
+//     });
 
-    // State cho việc chỉnh sửa
-    const [editingMatchId, setEditingMatchId] = useState<string | null>(null);
-    const [editMatchData, setEditMatchData] = useState<Omit<ScheduleMatch, 'id' | 'userId' | 'category'>>({
-        court: '', time: '', teamA: '', teamB: '', scoreA: 0, scoreB: 0
-    });
+//     // State cho việc chỉnh sửa
+//     const [editingMatchId, setEditingMatchId] = useState<string | null>(null);
+//     const [editMatchData, setEditMatchData] = useState<Omit<ScheduleMatch, 'id' | 'userId' | 'category'>>({
+//         court: '', time: '', teamA: '', teamB: '', scoreA: 0, scoreB: 0
+//     });
 
-    // Hàm CRUD - Add
-    const addMatch = async () => {
-        setErrorMessage(null);
-        if (!user || !db) return setErrorMessage("Vui lòng đăng nhập để thêm lịch thi đấu!");
-        const { court, time, teamA, teamB } = newMatch;
-        if (!court.trim() || !time.trim() || !teamA.trim() || !teamB.trim()) {
-            return setErrorMessage("Lịch thi đấu: Vui lòng nhập đầy đủ thông tin (Sân, Thời gian, Đội A, Đội B).");
-        }
+//     // Hàm CRUD - Add
+//     const addMatch = async () => {
+//         setErrorMessage(null);
+//         if (!user || !db) return setErrorMessage("Vui lòng đăng nhập để thêm lịch thi đấu!");
+//         const { court, time, teamA, teamB } = newMatch;
+//         if (!court.trim() || !time.trim() || !teamA.trim() || !teamB.trim()) {
+//             return setErrorMessage("Lịch thi đấu: Vui lòng nhập đầy đủ thông tin (Sân, Thời gian, Đội A, Đội B).");
+//         }
 
-        try {
-            const matchesCol = collection(db, getCollectionPath('scheduleMatches', user.uid));
-            await addDoc(matchesCol, {
-                ...newMatch,
-                category: activeCategory,
-                userId: user.uid,
-                createdAt: new Date().toISOString(),
-            });
-            setNewMatch({ court: "", time: "", teamA: "", teamB: "", scoreA: 0, scoreB: 0 });
-        } catch (e) {
-            console.error("Lỗi khi thêm lịch thi đấu:", e);
-            setErrorMessage("Lỗi: Không thể thêm lịch thi đấu vào Firestore.");
-        }
-    };
+//         try {
+//             const matchesCol = collection(db, getCollectionPath('scheduleMatches', user.uid));
+//             await addDoc(matchesCol, {
+//                 ...newMatch,
+//                 category: activeCategory,
+//                 userId: user.uid,
+//                 createdAt: new Date().toISOString(),
+//             });
+//             setNewMatch({ court: "", time: "", teamA: "", teamB: "", scoreA: 0, scoreB: 0 });
+//         } catch (e) {
+//             console.error("Lỗi khi thêm lịch thi đấu:", e);
+//             setErrorMessage("Lỗi: Không thể thêm lịch thi đấu vào Firestore.");
+//         }
+//     };
     
-    // Hàm CRUD - Delete
-    const deleteMatch = async (id: string) => {
-        if (!user || !db) return;
-        try {
-            const matchDoc = doc(db, getCollectionPath('scheduleMatches', user.uid), id);
-            await deleteDoc(matchDoc);
-        } catch (e) {
-            console.error("Lỗi khi xóa trận đấu:", e);
-            setErrorMessage("Lỗi: Không thể xóa trận đấu.");
-        }
-    };
+//     // Hàm CRUD - Delete
+//     const deleteMatch = async (id: string) => {
+//         if (!user || !db) return;
+//         try {
+//             const matchDoc = doc(db, getCollectionPath('scheduleMatches', user.uid), id);
+//             await deleteDoc(matchDoc);
+//         } catch (e) {
+//             console.error("Lỗi khi xóa trận đấu:", e);
+//             setErrorMessage("Lỗi: Không thể xóa trận đấu.");
+//         }
+//     };
 
-    // Hàm CRUD - Update (Save Edit)
-    const saveEditMatch = async (id: string) => {
-        setErrorMessage(null);
-        if (!user || !db) return;
-        const { court, time, teamA, teamB } = editMatchData;
-        if (!court.trim() || !time.trim() || !teamA.trim() || !teamB.trim()) {
-            return setErrorMessage("Chỉnh sửa: Vui lòng nhập đầy đủ thông tin trận đấu!");
-        }
-        try {
-            const matchDoc = doc(db, getCollectionPath('scheduleMatches', user.uid), id);
-            await updateDoc(matchDoc, {
-                ...editMatchData,
-                time: time.trim(),
-                court: court.trim(),
-                teamA: teamA.trim(),
-                teamB: teamB.trim(),
-            });
-            setEditingMatchId(null);
-        } catch (e) {
-            console.error("Lỗi khi cập nhật trận đấu:", e);
-            setErrorMessage("Lỗi: Không thể cập nhật trận đấu.");
-        }
-    };
+//     // Hàm CRUD - Update (Save Edit)
+//     const saveEditMatch = async (id: string) => {
+//         setErrorMessage(null);
+//         if (!user || !db) return;
+//         const { court, time, teamA, teamB } = editMatchData;
+//         if (!court.trim() || !time.trim() || !teamA.trim() || !teamB.trim()) {
+//             return setErrorMessage("Chỉnh sửa: Vui lòng nhập đầy đủ thông tin trận đấu!");
+//         }
+//         try {
+//             const matchDoc = doc(db, getCollectionPath('scheduleMatches', user.uid), id);
+//             await updateDoc(matchDoc, {
+//                 ...editMatchData,
+//                 time: time.trim(),
+//                 court: court.trim(),
+//                 teamA: teamA.trim(),
+//                 teamB: teamB.trim(),
+//             });
+//             setEditingMatchId(null);
+//         } catch (e) {
+//             console.error("Lỗi khi cập nhật trận đấu:", e);
+//             setErrorMessage("Lỗi: Không thể cập nhật trận đấu.");
+//         }
+//     };
     
-    // Bắt đầu chỉnh sửa
-    const startEdit = (match: ScheduleMatch) => {
-        setEditingMatchId(match.id);
-        setEditMatchData({
-            court: match.court,
-            time: match.time,
-            teamA: match.teamA,
-            teamB: match.teamB,
-            scoreA: match.scoreA,
-            scoreB: match.scoreB,
-        });
-    };
+//     // Bắt đầu chỉnh sửa
+//     const startEdit = (match: ScheduleMatch) => {
+//         setEditingMatchId(match.id);
+//         setEditMatchData({
+//             court: match.court,
+//             time: match.time,
+//             teamA: match.teamA,
+//             teamB: match.teamB,
+//             scoreA: match.scoreA,
+//             scoreB: match.scoreB,
+//         });
+//     };
 
-    const renderLoading = () => (
-        <div className="flex justify-center items-center p-8 my-6">
-            <Loader2 className="w-8 h-8 animate-spin text-cyan-600" />
-            <p className="ml-3 text-gray-700 font-medium">Đang tải lịch thi đấu...</p>
-        </div>
-    );
+//     const renderLoading = () => (
+//         <div className="flex justify-center items-center p-8 my-6">
+//             <Loader2 className="w-8 h-8 animate-spin text-cyan-600" />
+//             <p className="ml-3 text-gray-700 font-medium">Đang tải lịch thi đấu...</p>
+//         </div>
+//     );
 
     // return (
     //     <div className="space-y-6">
@@ -524,7 +524,7 @@ const ScheduleManager: React.FC<ScheduleManagerProps> = ({ user, activeCategory,
     //         </div>
     //     </div>
     // );
-};
+// };
 
 
 // --- VI. MAIN COMPONENT: TOURNAMENT MANAGER ---
@@ -620,13 +620,13 @@ export default function TournamentManager() {
                     <StatsTable matches={matches} activeCategory={activeTab} />
 
                     {/* LỊCH THI ĐẤU (INPUT + LIST) */}
-                    <ScheduleManager 
+                    {/* <ScheduleManager 
                         user={user} 
                         activeCategory={activeTab} 
                         matches={matches} 
                         loadingMatches={loadingMatches} 
                         setErrorMessage={setErrorMessage} 
-                    />
+                    /> */}
                 </div>
             )}
 
