@@ -11,22 +11,19 @@ type SidebarProps = {
 export default function Sidebar({ tab, setTab }: SidebarProps) {
   const [showProductDropdown, setShowProductDropdown] = useState(false);
 
-  // Active khi dropdown mở hoặc đang ở tab con sản phẩm
-  const isProductActive = showProductDropdown || tab.startsWith("product");
-
   const handleClickProduct = () => {
-    // Toggle mở/đóng dropdown theo đúng yêu cầu
     setShowProductDropdown((prev) => !prev);
+    setTab("product");
   };
 
   const handleSelectProductTab = (next: "product-sale" | "product-rent") => {
     setTab(next);
-    setShowProductDropdown(true); // giữ dropdown mở khi chọn mục con
+    setShowProductDropdown(true);
   };
 
   const handleClickOtherTab = (next: string) => {
     setTab(next);
-    setShowProductDropdown(false); // đóng dropdown khi chuyển sang tab khác
+    setShowProductDropdown(false);
   };
 
   return (
@@ -58,20 +55,17 @@ export default function Sidebar({ tab, setTab }: SidebarProps) {
           <button
             onClick={handleClickProduct}
             className={`w-full px-4 py-2 rounded-xl flex items-center justify-between ${
-              isProductActive ? "bg-indigo-600 text-white" : "bg-blue-300 text-black hover:bg-gray-200"
+              tab === "product" || tab.startsWith("product")
+                ? "bg-indigo-600 text-white"
+                : "bg-blue-300 text-black hover:bg-gray-200"
             }`}
           >
             <span className="flex items-center">
               <Package className="w-5 h-5 mr-2" /> Sản phẩm
             </span>
-            {showProductDropdown ? (
-              <ChevronUp className="w-4 h-4" />
-            ) : (
-              <ChevronDown className="w-4 h-4" />
-            )}
+            {showProductDropdown ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
 
-          {/* Dropdown chỉ hiển thị khi showProductDropdown = true */}
           {showProductDropdown && (
             <div className="ml-6 mt-2 space-y-2">
               <button

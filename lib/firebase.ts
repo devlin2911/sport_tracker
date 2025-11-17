@@ -10,6 +10,7 @@ import {
   User 
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from "firebase/storage";
 
 // --- Cấu hình Firebase từ biến môi trường (an toàn & đúng chuẩn Next.js) ---
 const firebaseConfig = {
@@ -53,6 +54,8 @@ const logOut = async () => {
 export const getAppId = () => {
   return process.env.NEXT_PUBLIC_FIREBASE_APP_ID || 'default-app-id';
 };
+
+export const storage = getStorage(app);
 
 // --- Xuất ra cho các file khác dùng ---
 export { db, auth, signInWithGoogle, logOut };
