@@ -82,57 +82,69 @@ export default function ProductManager({ type }: ProductManagerProps) {
   };
 
   const handleSubmit = async () => {
-  try {
-    setUploading(true);
-    let imageUrl = currentImageUrl;
+    try {
+      setUploading(true);
+      let imageUrl = currentImageUrl;
 
-    if (imageFile) {
-      imageUrl = await uploadToCloudinary(imageFile);
+      if (imageFile) {
+        imageUrl = await uploadToCloudinary(imageFile);
+      }
+
+      // ✅ Chuẩn hóa type để đảm bảo đúng kiểu union
+      const normalizedType: "sale" | "rental" = type === "sale" ? "sale" : "rental";
+
+      // ✅ Tạo sản phẩm mới với kiểu đúng
+      const newProduct: Product = {
+        id: editingId || "", // tạm thời, sẽ được ghi đè nếu thêm mới
+        productCode: form.productCode,
+        name: form.name,
+        category: form.category,
+        price: Number(form.price),
+        rentalPrice: Number(form.rentalPrice),
+        deposit: Number(form.deposit),
+        description: form.description,
+        imageUrl,
+        type: normalizedType,
+      };
+
+      if (editingId) {
+        // ✅ Tạo bản sao không có id
+        const { id, ...updateData } = newProduct;
+
+        await updateDoc(doc(db, "products", editingId), updateData);
+
+        setProducts((prev) =>
+          prev.map((p) => (p.id === editingId ? { ...newProduct, id: editingId } : p))
+        );
+        alert("Cập nhật sản phẩm thành công!");
+        setEditingId(null);
+      } else {
+        // ✅ Thêm sản phẩm mới
+        const docRef = await addDoc(collection(db, "products"), newProduct);
+        setProducts((prev) => [...prev, { ...newProduct, id: docRef.id }]);
+        alert("Thêm sản phẩm thành công!");
+      }
+
+      // ✅ Reset form
+      setForm({
+        productCode: "",
+        name: "",
+        category: "",
+        price: 0,
+        rentalPrice: 0,
+        deposit: 0,
+        description: "",
+      });
+      setImageFile(null);
+      setCurrentImageUrl("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (err) {
+      console.error(err);
+      alert("Lỗi khi thêm/cập nhật sản phẩm");
+    } finally {
+      setUploading(false);
     }
-
-    const newProduct = {
-      ...form,
-      type: type === "sale" ? "sale" : "rental",
-      imageUrl,
-      price: Number(form.price),
-      rentalPrice: Number(form.rentalPrice),
-      deposit: Number(form.deposit),
-    };
-
-    if (editingId) {
-      // ✅ Update sản phẩm cũ
-      await updateDoc(doc(db, "products", editingId), newProduct);
-      setProducts((prev) =>
-        prev.map((p) => (p.id === editingId ? { id: editingId, ...newProduct } : p))
-      );
-      alert("Cập nhật sản phẩm thành công!");
-      setEditingId(null);
-    } else {
-      // ✅ Thêm sản phẩm mới
-      const docRef = await addDoc(collection(db, "products"), newProduct);
-      setProducts((prev) => [...prev, { id: docRef.id, ...newProduct }]);
-      alert("Thêm sản phẩm thành công!");
-    }
-
-    // Reset form
-    setForm({
-      productCode: "",
-      name: "",
-      category: "",
-      price: 0,
-      rentalPrice: 0,
-      deposit: 0,
-      description: "",
-    });
-    setImageFile(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  } catch (err) {
-    console.error(err);
-    alert("Lỗi khi thêm/cập nhật sản phẩm");
-  } finally {
-    setUploading(false);
-  }
-};
+  };
 
   const handleDelete = async (id: string) => {
     try {

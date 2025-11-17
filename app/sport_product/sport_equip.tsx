@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ShoppingCart, Repeat2, DollarSign, Clock, Heart } from "lucide-react";
-import { db } from "../../lib/firebase.ts";
+import { db } from "../../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 // Định dạng tiền tệ
